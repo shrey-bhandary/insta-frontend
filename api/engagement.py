@@ -4,8 +4,8 @@ import asyncio
 import aiohttp
 import re
 from urllib.parse import parse_qs
-from scraper import scrape_instagram_data
-from stats import calculate_engagement
+from .scraper import scrape_instagram_data
+from .stats import calculate_engagement
 
 class handler(BaseHTTPRequestHandler):
     def do_POST(self):
