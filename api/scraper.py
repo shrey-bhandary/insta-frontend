@@ -4,7 +4,7 @@ import asyncio
 import json
 from bs4 import BeautifulSoup
 
-async def scrape_instagram_data(username: str, post_limit: int = 10, max_retries: int = 3):
+async def scrape_instagram_data(username: str, post_limit: int = 30, max_retries: int = 3):
     headers = {
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
         'Accept': 'application/json',
@@ -88,4 +88,5 @@ async def scrape_instagram_data(username: str, post_limit: int = 10, max_retries
                     await asyncio.sleep(2)
                     continue
                     
+
         return 0, [], []
