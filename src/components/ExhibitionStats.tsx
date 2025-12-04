@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Users, Zap, TrendingUp, Clock, Trophy } from "lucide-react";
+import { Users, Zap, Clock, Trophy, Sparkles } from "lucide-react";
 import { loadUserStats } from "../utils/gamification";
 
 export function ExhibitionStats() {
@@ -31,42 +31,55 @@ export function ExhibitionStats() {
   }, [stats.accountsChecked]);
 
   return (
-    <div className="bg-gradient-to-r from-yellow-400/20 to-orange-400/20 backdrop-blur-md rounded-2xl p-6 border border-yellow-400/40 mb-6">
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="text-2xl font-bold text-white flex items-center">
-          <TrendingUp className="h-6 w-6 text-yellow-400 mr-2" />
-          Exhibition Live Stats
-        </h3>
-        <div className="flex items-center space-x-2 text-yellow-400">
-          <div className="w-3 h-3 bg-yellow-400 rounded-full animate-pulse"></div>
-          <span className="text-sm font-semibold">LIVE</span>
-        </div>
+    <div className="bg-gradient-to-r from-blue-600/30 via-purple-600/30 to-pink-600/30 backdrop-blur-md rounded-2xl p-6 border border-white/20 mb-8 relative overflow-hidden">
+      {/* Animated background elements */}
+      <div className="absolute inset-0 opacity-20">
+        <div className="absolute top-0 left-0 w-32 h-32 bg-yellow-400 rounded-full blur-3xl animate-pulse"></div>
+        <div
+          className="absolute bottom-0 right-0 w-32 h-32 bg-purple-400 rounded-full blur-3xl animate-pulse"
+          style={{ animationDelay: "1s" }}
+        ></div>
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="bg-white/10 rounded-xl p-4 text-center border border-white/20">
-          <Users className="h-6 w-6 text-yellow-400 mx-auto mb-2" />
-          <div className="text-2xl font-bold text-white">
-            {stats.accountsChecked}
+      <div className="relative z-10">
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center">
+            <Sparkles className="h-8 w-8 text-yellow-400 mr-3 animate-pulse" />
+            <h3 className="text-3xl font-bold text-white">
+              Xynergy <span className="text-yellow-400">Live Stats</span>
+            </h3>
           </div>
-          <div className="text-xs text-blue-200">Total Checks</div>
-        </div>
-        <div className="bg-white/10 rounded-xl p-4 text-center border border-white/20">
-          <Zap className="h-6 w-6 text-yellow-400 mx-auto mb-2" />
-          <div className="text-2xl font-bold text-white">
-            {stats.totalPoints.toLocaleString()}
+          <div className="flex items-center space-x-2 text-yellow-400">
+            <div className="w-3 h-3 bg-yellow-400 rounded-full animate-pulse"></div>
+            <span className="text-sm font-semibold">LIVE</span>
           </div>
-          <div className="text-xs text-blue-200">Points Earned</div>
         </div>
-        <div className="bg-white/10 rounded-xl p-4 text-center border border-white/20">
-          <Trophy className="h-6 w-6 text-yellow-400 mx-auto mb-2" />
-          <div className="text-2xl font-bold text-white">{stats.level}</div>
-          <div className="text-xs text-blue-200">Current Level</div>
-        </div>
-        <div className="bg-white/10 rounded-xl p-4 text-center border border-white/20">
-          <Clock className="h-6 w-6 text-yellow-400 mx-auto mb-2" />
-          <div className="text-2xl font-bold text-white">{sessionChecks}</div>
-          <div className="text-xs text-blue-200">This Session</div>
+
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 text-center border border-white/20 hover:bg-white/20 transition-all duration-300 transform hover:scale-105 hover:shadow-lg">
+            <Users className="h-6 w-6 text-yellow-400 mx-auto mb-2" />
+            <div className="text-2xl font-bold text-white">
+              {stats.accountsChecked}
+            </div>
+            <div className="text-xs text-blue-200">Total Checks</div>
+          </div>
+          <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 text-center border border-white/20 hover:bg-white/20 transition-all duration-300 transform hover:scale-105 hover:shadow-lg">
+            <Zap className="h-6 w-6 text-yellow-400 mx-auto mb-2" />
+            <div className="text-2xl font-bold text-white">
+              {stats.totalPoints.toLocaleString()}
+            </div>
+            <div className="text-xs text-blue-200">Points Earned</div>
+          </div>
+          <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 text-center border border-white/20 hover:bg-white/20 transition-all duration-300 transform hover:scale-105 hover:shadow-lg">
+            <Trophy className="h-6 w-6 text-yellow-400 mx-auto mb-2" />
+            <div className="text-2xl font-bold text-white">{stats.level}</div>
+            <div className="text-xs text-blue-200">Current Level</div>
+          </div>
+          <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 text-center border border-white/20 hover:bg-white/20 transition-all duration-300 transform hover:scale-105 hover:shadow-lg">
+            <Clock className="h-6 w-6 text-yellow-400 mx-auto mb-2" />
+            <div className="text-2xl font-bold text-white">{sessionChecks}</div>
+            <div className="text-xs text-blue-200">This Session</div>
+          </div>
         </div>
       </div>
     </div>

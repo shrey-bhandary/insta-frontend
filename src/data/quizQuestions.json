@@ -1,0 +1,327 @@
+[
+  {
+    "type": "multiple_choice",
+    "question": "How many followers does Cristiano Ronaldo have?",
+    "options": ["400M", "500M", "600M", "700M"],
+    "answer": "600M"
+  },
+  {
+    "type": "higher_lower",
+    "question": "Does Selena Gomez have more or less followers than Ariana Grande?",
+    "options": ["More", "Less"],
+    "answer": "More"
+  },
+  {
+    "type": "who_has_more",
+    "question": "Who has more followers?",
+    "options": ["Taylor Swift", "Beyoncé"],
+    "answer": "Taylor Swift"
+  },
+  {
+    "type": "rank",
+    "question": "Rank these celebrities by follower count (highest to lowest):",
+    "options": ["Kylie Jenner", "Kim Kardashian", "Kendall Jenner", "Khloe Kardashian"],
+    "answer": "Kylie Jenner, Kim Kardashian, Kendall Jenner, Khloe Kardashian"
+  },
+  {
+    "type": "range",
+    "question": "How many followers does Dwayne 'The Rock' Johnson have?",
+    "options": ["100-200M", "200-300M", "300-400M", "400-500M"],
+    "answer": "300-400M"
+  },
+  {
+    "type": "true_false",
+    "question": "Justin Bieber has over 300 million followers.",
+    "options": ["True", "False"],
+    "answer": "True"
+  },
+  {
+    "type": "closest_guess",
+    "question": "Guess the exact follower count for Billie Eilish (closest wins):",
+    "options": ["80M", "100M", "120M", "140M"],
+    "answer": "100M"
+  },
+  {
+    "type": "odd_one_out",
+    "question": "Which celebrity has the LOWEST follower count?",
+    "options": ["Tom Hanks", "Leonardo DiCaprio", "Brad Pitt", "Johnny Depp"],
+    "answer": "Tom Hanks"
+  },
+  {
+    "type": "match_bracket",
+    "question": "Which celebrity has 200-300 million followers?",
+    "options": ["Ariana Grande", "Kylie Jenner", "Lionel Messi", "The Rock"],
+    "answer": "Ariana Grande"
+  },
+  {
+    "type": "multiple_choice",
+    "question": "How many followers does Kylie Jenner have?",
+    "options": ["300M", "400M", "500M", "600M"],
+    "answer": "400M"
+  },
+  {
+    "type": "higher_lower",
+    "question": "Does Lionel Messi have more or less followers than Neymar?",
+    "options": ["More", "Less"],
+    "answer": "More"
+  },
+  {
+    "type": "who_has_more",
+    "question": "Who has more followers?",
+    "options": ["Dwayne Johnson", "Kevin Hart"],
+    "answer": "Dwayne Johnson"
+  },
+  {
+    "type": "rank",
+    "question": "Rank these by follower count (highest to lowest):",
+    "options": ["Nike", "Cristiano Ronaldo", "Real Madrid", "FC Barcelona"],
+    "answer": "Cristiano Ronaldo, Real Madrid, FC Barcelona, Nike"
+  },
+  {
+    "type": "range",
+    "question": "How many followers does Zendaya have?",
+    "options": ["50-100M", "100-150M", "150-200M", "200-250M"],
+    "answer": "150-200M"
+  },
+  {
+    "type": "true_false",
+    "question": "National Geographic has more followers than NASA.",
+    "options": ["True", "False"],
+    "answer": "True"
+  },
+  {
+    "type": "closest_guess",
+    "question": "Guess the follower count for Drake (closest wins):",
+    "options": ["100M", "120M", "140M", "160M"],
+    "answer": "140M"
+  },
+  {
+    "type": "odd_one_out",
+    "question": "Which has the HIGHEST follower count?",
+    "options": ["Netflix", "YouTube", "Instagram", "TikTok"],
+    "answer": "Instagram"
+  },
+  {
+    "type": "match_bracket",
+    "question": "Which celebrity has 100-200 million followers?",
+    "options": ["Zendaya", "Billie Eilish", "Shawn Mendes", "Camila Cabello"],
+    "answer": "Zendaya"
+  },
+  {
+    "type": "multiple_choice",
+    "question": "How many followers does Kim Kardashian have?",
+    "options": ["300M", "350M", "400M", "450M"],
+    "answer": "350M"
+  },
+  {
+    "type": "higher_lower",
+    "question": "Does Virat Kohli have more or less followers than MS Dhoni?",
+    "options": ["More", "Less"],
+    "answer": "More"
+  },
+  {
+    "type": "who_has_more",
+    "question": "Who has more followers?",
+    "options": ["Jennifer Lopez", "Shakira"],
+    "answer": "Shakira"
+  },
+  {
+    "type": "rank",
+    "question": "Rank these singers by follower count:",
+    "options": ["Ed Sheeran", "Bruno Mars", "The Weeknd", "Post Malone"],
+    "answer": "Ed Sheeran, The Weeknd, Post Malone, Bruno Mars"
+  },
+  {
+    "type": "range",
+    "question": "How many followers does Priyanka Chopra have?",
+    "options": ["50-75M", "75-100M", "100-125M", "125-150M"],
+    "answer": "75-100M"
+  },
+  {
+    "type": "true_false",
+    "question": "Kendall Jenner has more followers than Khloe Kardashian.",
+    "options": ["True", "False"],
+    "answer": "True"
+  },
+  {
+    "type": "closest_guess",
+    "question": "Guess the follower count for Bad Bunny (closest wins):",
+    "options": ["40M", "50M", "60M", "70M"],
+    "answer": "50M"
+  },
+  {
+    "type": "odd_one_out",
+    "question": "Which celebrity has the LOWEST follower count?",
+    "options": ["Gal Gadot", "Emma Watson", "Scarlett Johansson", "Jennifer Lawrence"],
+    "answer": "Jennifer Lawrence"
+  },
+  {
+    "type": "match_bracket",
+    "question": "Which has 50-100 million followers?",
+    "options": ["Will Smith", "Tom Cruise", "Robert Downey Jr", "Chris Hemsworth"],
+    "answer": "Will Smith"
+  },
+  {
+    "type": "multiple_choice",
+    "question": "How many followers does Justin Bieber have?",
+    "options": ["250M", "300M", "350M", "400M"],
+    "answer": "300M"
+  },
+  {
+    "type": "higher_lower",
+    "question": "Does David Beckham have more or less followers than Neymar?",
+    "options": ["More", "Less"],
+    "answer": "Less"
+  },
+  {
+    "type": "who_has_more",
+    "question": "Who has more followers?",
+    "options": ["Miley Cyrus", "Demi Lovato"],
+    "answer": "Miley Cyrus"
+  },
+  {
+    "type": "rank",
+    "question": "Rank these by follower count:",
+    "options": ["NBA", "NFL", "Premier League", "UEFA Champions League"],
+    "answer": "NBA, Premier League, UEFA Champions League, NFL"
+  },
+  {
+    "type": "range",
+    "question": "How many followers does Emma Watson have?",
+    "options": ["50-70M", "70-90M", "90-110M", "110-130M"],
+    "answer": "70-90M"
+  },
+  {
+    "type": "true_false",
+    "question": "FC Barcelona has more followers than Real Madrid.",
+    "options": ["True", "False"],
+    "answer": "False"
+  },
+  {
+    "type": "closest_guess",
+    "question": "Guess the follower count for Rihanna (closest wins):",
+    "options": ["120M", "140M", "160M", "180M"],
+    "answer": "140M"
+  },
+  {
+    "type": "odd_one_out",
+    "question": "Which has the HIGHEST follower count?",
+    "options": ["McDonald's", "Starbucks", "Coca-Cola", "Nike"],
+    "answer": "Nike"
+  },
+  {
+    "type": "match_bracket",
+    "question": "Which celebrity has 150-200 million followers?",
+    "options": ["Nicki Minaj", "Cardi B", "Megan Thee Stallion", "Doja Cat"],
+    "answer": "Nicki Minaj"
+  },
+  {
+    "type": "multiple_choice",
+    "question": "How many followers does Shakira have?",
+    "options": ["70M", "80M", "90M", "100M"],
+    "answer": "80M"
+  },
+  {
+    "type": "higher_lower",
+    "question": "Does LeBron James have more or less followers than Stephen Curry?",
+    "options": ["More", "Less"],
+    "answer": "More"
+  },
+  {
+    "type": "who_has_more",
+    "question": "Who has more followers?",
+    "options": ["Virat Kohli", "Rohit Sharma"],
+    "answer": "Virat Kohli"
+  },
+  {
+    "type": "rank",
+    "question": "Rank these actors by follower count:",
+    "options": ["Chris Evans", "Chris Hemsworth", "Tom Holland", "Robert Downey Jr"],
+    "answer": "Robert Downey Jr, Chris Hemsworth, Tom Holland, Chris Evans"
+  },
+  {
+    "type": "range",
+    "question": "How many followers does Gigi Hadid have?",
+    "options": ["60-80M", "80-100M", "100-120M", "120-140M"],
+    "answer": "80-100M"
+  },
+  {
+    "type": "true_false",
+    "question": "Kendall Jenner has over 200 million followers.",
+    "options": ["True", "False"],
+    "answer": "True"
+  },
+  {
+    "type": "closest_guess",
+    "question": "Guess the follower count for Travis Scott (closest wins):",
+    "options": ["30M", "40M", "50M", "60M"],
+    "answer": "50M"
+  },
+  {
+    "type": "odd_one_out",
+    "question": "Which has the LOWEST follower count?",
+    "options": ["Marvel", "DC Comics", "Star Wars", "Harry Potter"],
+    "answer": "DC Comics"
+  },
+  {
+    "type": "match_bracket",
+    "question": "Which has 20-50 million followers?",
+    "options": ["Tom Holland", "Timothée Chalamet", "Austin Butler", "Jacob Elordi"],
+    "answer": "Tom Holland"
+  },
+  {
+    "type": "multiple_choice",
+    "question": "How many followers does Kevin Hart have?",
+    "options": ["150M", "160M", "170M", "180M"],
+    "answer": "170M"
+  },
+  {
+    "type": "higher_lower",
+    "question": "Does Will Smith have more or less followers than Chris Rock?",
+    "options": ["More", "Less"],
+    "answer": "More"
+  },
+  {
+    "type": "who_has_more",
+    "question": "Who has more followers?",
+    "options": ["Lil Nas X", "Jack Harlow"],
+    "answer": "Lil Nas X"
+  },
+  {
+    "type": "rank",
+    "question": "Rank these by follower count:",
+    "options": ["Champions League", "World Cup", "Premier League", "La Liga"],
+    "answer": "Champions League, Premier League, La Liga, World Cup"
+  },
+  {
+    "type": "range",
+    "question": "How many followers does Hailey Bieber have?",
+    "options": ["40-50M", "50-60M", "60-70M", "70-80M"],
+    "answer": "50-60M"
+  },
+  {
+    "type": "true_false",
+    "question": "Nike has over 300 million followers.",
+    "options": ["True", "False"],
+    "answer": "True"
+  },
+  {
+    "type": "closest_guess",
+    "question": "Guess the follower count for The Weeknd (closest wins):",
+    "options": ["30M", "40M", "50M", "60M"],
+    "answer": "40M"
+  },
+  {
+    "type": "odd_one_out",
+    "question": "Which celebrity has the HIGHEST follower count?",
+    "options": ["Tom Cruise", "Brad Pitt", "Leonardo DiCaprio", "Johnny Depp"],
+    "answer": "Leonardo DiCaprio"
+  },
+  {
+    "type": "match_bracket",
+    "question": "Which has 10-30 million followers?",
+    "options": ["Timothée Chalamet", "Austin Butler", "Jacob Elordi", "Barry Keoghan"],
+    "answer": "Timothée Chalamet"
+  }
+]
+

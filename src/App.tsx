@@ -9,27 +9,22 @@ import {
   BarChart3,
   ArrowRight,
   Trophy,
-  Award,
   BarChart,
 } from "lucide-react";
 import {
   UserStats as UserStatsType,
   loadUserStats,
   processEngagementCheck,
-  getAllAchievements,
-  getLeaderboard,
   Achievement,
 } from "./utils/gamification";
-import { UserStats } from "./components/UserStats";
+import { Quiz } from "./components/Quiz";
 import { Leaderboard } from "./components/Leaderboard";
-import { Achievements } from "./components/Achievements";
 import { DailyChallenge } from "./components/DailyChallenge";
 import { PointsAnimation } from "./components/PointsAnimation";
 import { AchievementUnlock } from "./components/AchievementUnlock";
-import { QuickDemo } from "./components/QuickDemo";
 import { ExhibitionStats } from "./components/ExhibitionStats";
 import { Confetti } from "./components/Confetti";
-import { FeatureShowcase } from "./components/FeatureShowcase";
+import { CompareMode } from "./components/CompareMode";
 
 interface EngagementData {
   username: string;
@@ -39,7 +34,7 @@ interface EngagementData {
   engagementRate: string;
 }
 
-type Tab = "analyze" | "stats" | "leaderboard" | "achievements";
+type Tab = "analyze" | "stats" | "quiz" | "leaderboard";
 
 function App() {
   const [username, setUsername] = useState("");
@@ -48,24 +43,11 @@ function App() {
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<Tab>("analyze");
   const [userStats, setUserStats] = useState<UserStatsType>(loadUserStats());
-  const [achievements, setAchievements] = useState<Achievement[]>(
-    getAllAchievements()
-  );
   const [pointsEarned, setPointsEarned] = useState<number | null>(null);
   const [unlockedAchievement, setUnlockedAchievement] =
     useState<Achievement | null>(null);
   const [showConfetti, setShowConfetti] = useState(false);
-
-  const handleQuickDemo = (demoUsername: string) => {
-    setUsername(demoUsername);
-    // Trigger submit after a brief delay for visual feedback
-    setTimeout(() => {
-      const form = document.querySelector("form");
-      if (form) {
-        form.requestSubmit();
-      }
-    }, 100);
-  };
+  const [mode, setMode] = useState<"normal" | "vs">("normal");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -114,10 +96,13 @@ function App() {
           pointsEarned: earned,
           newStats,
           newAchievements,
-        } = processEngagementCheck(engagementRateNum);
+        } = processEngagementCheck(
+          engagementRateNum,
+          received.username,
+          received.followers
+        );
 
         setUserStats(newStats);
-        setAchievements(getAllAchievements());
         setPointsEarned(earned);
 
         // Show first achievement if any unlocked
@@ -205,7 +190,20 @@ function App() {
           >
             <div className="flex items-center justify-center space-x-2">
               <BarChart className="h-5 w-5" />
-              <span>My Stats</span>
+              <span>Live Stats</span>
+            </div>
+          </button>
+          <button
+            onClick={() => setActiveTab("quiz")}
+            className={`flex-1 px-6 py-3 rounded-xl font-bold transition-all ${
+              activeTab === "quiz"
+                ? "bg-yellow-400 text-blue-900"
+                : "text-white hover:bg-white/10"
+            }`}
+          >
+            <div className="flex items-center justify-center space-x-2">
+              <Trophy className="h-5 w-5" />
+              <span>Quiz</span>
             </div>
           </button>
           <button
@@ -219,19 +217,6 @@ function App() {
             <div className="flex items-center justify-center space-x-2">
               <Trophy className="h-5 w-5" />
               <span>Leaderboard</span>
-            </div>
-          </button>
-          <button
-            onClick={() => setActiveTab("achievements")}
-            className={`flex-1 px-6 py-3 rounded-xl font-bold transition-all ${
-              activeTab === "achievements"
-                ? "bg-yellow-400 text-blue-900"
-                : "text-white hover:bg-white/10"
-            }`}
-          >
-            <div className="flex items-center justify-center space-x-2">
-              <Award className="h-5 w-5" />
-              <span>Achievements</span>
             </div>
           </button>
         </div>
@@ -260,21 +245,6 @@ function App() {
         {/* Analyze Tab */}
         {activeTab === "analyze" && (
           <>
-            {/* Feature Showcase */}
-            <div className="max-w-7xl mx-auto mb-8">
-              <FeatureShowcase />
-            </div>
-
-            {/* Exhibition Stats */}
-            <div className="max-w-7xl mx-auto mb-8">
-              <ExhibitionStats />
-            </div>
-
-            {/* Quick Demo */}
-            <div className="max-w-7xl mx-auto mb-8">
-              <QuickDemo onDemoClick={handleQuickDemo} loading={loading} />
-            </div>
-
             {/* Hero Section */}
             <div className="text-center mb-16">
               <p className="text-yellow-400 font-semibold text-lg mb-4 tracking-wide uppercase">
@@ -292,52 +262,100 @@ function App() {
                 by <span className="text-yellow-400">10X+</span>
               </h1>
               <p className="text-blue-200 text-xl max-w-3xl mx-auto mb-8 leading-relaxed">
-                Since 2020, we've helped creators analyze their engagement rates
-                with precision.
-                <br />
-                Unlock insights in 30 seconds or get detailed analytics.
+                Search any public Instagram username with posts/reels to begin
+                comprehensive analysis
               </p>
 
-              {/* Search Form */}
-              <div className="max-w-lg mx-auto mb-12">
-                <form onSubmit={handleSubmit} className="relative">
-                  <div className="relative mb-6">
-                    <Search className="absolute left-6 top-1/2 transform -translate-y-1/2 h-6 w-6 text-blue-400" />
-                    <input
-                      type="text"
-                      value={username}
-                      onChange={(e) => setUsername(e.target.value)}
-                      placeholder="Enter Instagram username..."
-                      className="w-full pl-16 pr-6 py-5 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent text-white placeholder-blue-200 text-lg shadow-xl"
-                      disabled={loading}
-                    />
-                  </div>
+              {/* Mode Selection */}
+              <div className="max-w-lg mx-auto mb-8">
+                <div className="flex space-x-4 bg-white/10 backdrop-blur-md rounded-2xl p-2 border border-white/20">
                   <button
-                    type="submit"
-                    disabled={loading || !username.trim()}
-                    className="w-full bg-yellow-400 hover:bg-yellow-500 text-blue-900 py-5 rounded-2xl font-bold text-lg shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                    onClick={() => setMode("normal")}
+                    className={`flex-1 px-6 py-4 rounded-xl font-bold text-lg transition-all duration-300 ${
+                      mode === "normal"
+                        ? "bg-yellow-400 text-blue-900 shadow-lg"
+                        : "text-white hover:bg-white/10"
+                    }`}
                   >
-                    {loading ? (
-                      <div className="flex items-center justify-center">
-                        <div className="animate-spin rounded-full h-6 w-6 border-3 border-blue-900 border-t-transparent mr-3"></div>
-                        ANALYZING ENGAGEMENT...
+                    <div className="flex items-center justify-center space-x-2">
+                      <TrendingUp className="h-5 w-5" />
+                      <span>Normal</span>
+                    </div>
+                  </button>
+                  <button
+                    onClick={() => setMode("vs")}
+                    className={`flex-1 px-6 py-4 rounded-xl font-bold text-lg transition-all duration-300 ${
+                      mode === "vs"
+                        ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
+                        : "text-white hover:bg-white/10"
+                    }`}
+                  >
+                    <div className="flex items-center justify-center space-x-2">
+                      <Users className="h-5 w-5" />
+                      <span>VS Mode</span>
+                    </div>
+                  </button>
+                </div>
+              </div>
+
+              {/* Normal Mode */}
+              {mode === "normal" && (
+                <div className="max-w-2xl mx-auto mb-12">
+                  <div className="bg-white/10 backdrop-blur-md rounded-3xl p-8 border border-white/20 shadow-2xl">
+                    <form onSubmit={handleSubmit} className="relative">
+                      <div className="relative mb-6">
+                        <Search className="absolute left-6 top-1/2 transform -translate-y-1/2 h-6 w-6 text-blue-400" />
+                        <input
+                          type="text"
+                          value={username}
+                          onChange={(e) => setUsername(e.target.value)}
+                          placeholder="Enter Instagram username..."
+                          className="w-full pl-16 pr-6 py-5 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent text-white placeholder-blue-200 text-lg shadow-xl"
+                          disabled={loading}
+                        />
                       </div>
-                    ) : (
-                      <div className="flex items-center justify-center">
-                        <TrendingUp className="h-6 w-6 mr-3" />
-                        ANALYZE MY ENGAGEMENT
-                        <ArrowRight className="h-5 w-5 ml-2" />
+                      <button
+                        type="submit"
+                        disabled={loading || !username.trim()}
+                        className="w-full bg-yellow-400 hover:bg-yellow-500 text-blue-900 py-5 rounded-2xl font-bold text-lg shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                      >
+                        {loading ? (
+                          <div className="flex items-center justify-center">
+                            <div className="animate-spin rounded-full h-6 w-6 border-3 border-blue-900 border-t-transparent mr-3"></div>
+                            ANALYZING ENGAGEMENT...
+                          </div>
+                        ) : (
+                          <div className="flex items-center justify-center">
+                            <TrendingUp className="h-6 w-6 mr-3" />
+                            ANALYZE MY ENGAGEMENT
+                            <ArrowRight className="h-5 w-5 ml-2" />
+                          </div>
+                        )}
+                      </button>
+                    </form>
+
+                    {error && (
+                      <div className="mt-6 p-4 bg-red-500/20 border border-red-400/30 rounded-2xl text-red-200 text-center backdrop-blur-sm">
+                        {error}
                       </div>
                     )}
-                  </button>
-                </form>
-
-                {error && (
-                  <div className="mt-6 p-4 bg-red-500/20 border border-red-400/30 rounded-2xl text-red-200 text-center backdrop-blur-sm">
-                    {error}
                   </div>
-                )}
-              </div>
+                </div>
+              )}
+
+              {/* VS Mode */}
+              {mode === "vs" && (
+                <div className="max-w-7xl mx-auto mb-12">
+                  <CompareMode
+                    onClose={() => setMode("normal")}
+                    onAchievementUnlock={(achievement) => {
+                      setUnlockedAchievement(achievement);
+                      setShowConfetti(true);
+                      setTimeout(() => setShowConfetti(false), 3000);
+                    }}
+                  />
+                </div>
+              )}
             </div>
 
             {/* Results */}
@@ -534,23 +552,23 @@ function App() {
 
         {/* Stats Tab */}
         {activeTab === "stats" && (
-          <div className="max-w-6xl mx-auto">
-            <UserStats stats={userStats} />
+          <div className="max-w-7xl mx-auto">
+            <ExhibitionStats />
             <DailyChallenge stats={userStats} />
+          </div>
+        )}
+
+        {/* Quiz Tab */}
+        {activeTab === "quiz" && (
+          <div className="max-w-4xl mx-auto">
+            <Quiz />
           </div>
         )}
 
         {/* Leaderboard Tab */}
         {activeTab === "leaderboard" && (
           <div className="max-w-4xl mx-auto">
-            <Leaderboard entries={getLeaderboard()} />
-          </div>
-        )}
-
-        {/* Achievements Tab */}
-        {activeTab === "achievements" && (
-          <div className="max-w-6xl mx-auto">
-            <Achievements achievements={achievements} />
+            <Leaderboard entries={[]} />
           </div>
         )}
       </div>

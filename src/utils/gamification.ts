@@ -11,6 +11,9 @@ export interface UserStats {
     highEngagementFound: boolean;
     challengeDate: string;
   };
+  vsModeUsed?: boolean;
+  lastCheckTime?: number;
+  consecutiveChecks?: number;
 }
 
 export interface Achievement {
@@ -29,6 +32,13 @@ export interface LeaderboardEntry {
   accountsChecked: number;
 }
 
+export interface EngagementEntry {
+  username: string;
+  engagementRate: number;
+  followers: number;
+  checkedAt: string;
+}
+
 const ACHIEVEMENTS: Achievement[] = [
   {
     id: "first_check",
@@ -39,80 +49,81 @@ const ACHIEVEMENTS: Achievement[] = [
     unlocked: false,
   },
   {
-    id: "ten_checks",
-    name: "Checker Pro",
-    description: "Check 10 accounts",
+    id: "three_checks",
+    name: "Getting Started",
+    description: "Check 3 accounts",
     icon: "🔍",
+    points: 30,
+    unlocked: false,
+  },
+  {
+    id: "five_checks",
+    name: "Explorer",
+    description: "Check 5 accounts",
+    icon: "📊",
     points: 50,
     unlocked: false,
   },
   {
-    id: "fifty_checks",
-    name: "Analytics Master",
-    description: "Check 50 accounts",
-    icon: "📊",
-    points: 200,
-    unlocked: false,
-  },
-  {
-    id: "hundred_checks",
-    name: "Engagement Guru",
-    description: "Check 100 accounts",
-    icon: "👑",
-    points: 500,
-    unlocked: false,
-  },
-  {
     id: "high_engagement",
-    name: "Gold Digger",
+    name: "Gold Finder",
     description: "Find an account with 6%+ engagement",
     icon: "⭐",
     points: 100,
     unlocked: false,
   },
   {
-    id: "streak_3",
-    name: "On Fire",
-    description: "3 day streak",
-    icon: "🔥",
-    points: 50,
+    id: "vs_mode",
+    name: "Comparer",
+    description: "Use VS Mode to compare accounts",
+    icon: "⚔️",
+    points: 75,
     unlocked: false,
   },
   {
-    id: "streak_7",
-    name: "Week Warrior",
-    description: "7 day streak",
-    icon: "💪",
-    points: 150,
+    id: "level_2",
+    name: "Level Up",
+    description: "Reach level 2",
+    icon: "⬆️",
+    points: 0,
     unlocked: false,
   },
   {
-    id: "streak_30",
-    name: "Dedicated",
-    description: "30 day streak",
-    icon: "🏆",
-    points: 1000,
-    unlocked: false,
-  },
-  {
-    id: "level_5",
+    id: "level_3",
     name: "Rising Star",
-    description: "Reach level 5",
+    description: "Reach level 3",
     icon: "🌟",
     points: 0,
     unlocked: false,
   },
   {
-    id: "level_10",
-    name: "Elite",
-    description: "Reach level 10",
-    icon: "💎",
-    points: 0,
+    id: "daily_challenge",
+    name: "Challenge Master",
+    description: "Complete a daily challenge",
+    icon: "🎖️",
+    points: 150,
+    unlocked: false,
+  },
+  {
+    id: "top_engagement",
+    name: "Top Finder",
+    description: "Find an account in top 3 engagement",
+    icon: "🏆",
+    points: 200,
+    unlocked: false,
+  },
+  {
+    id: "quick_analyzer",
+    name: "Speed Demon",
+    description: "Check 2 accounts in a row",
+    icon: "⚡",
+    points: 40,
     unlocked: false,
   },
 ];
 
 const STORAGE_KEY = "insta_gamification_stats";
+const DAILY_ENGAGEMENT_KEY = "insta_daily_engagement";
 
 export function getInitialStats(): UserStats {
   return {
@@ -128,6 +139,9 @@ export function getInitialStats(): UserStats {
       highEngagementFound: false,
       challengeDate: new Date().toDateString(),
     },
+    vsModeUsed: false,
+    lastCheckTime: 0,
+    consecutiveChecks: 0,
   };
 }
 
@@ -241,32 +255,43 @@ export function checkAchievements(
       case "first_check":
         shouldUnlock = stats.accountsChecked >= 1;
         break;
-      case "ten_checks":
-        shouldUnlock = stats.accountsChecked >= 10;
+      case "three_checks":
+        shouldUnlock = stats.accountsChecked >= 3;
         break;
-      case "fifty_checks":
-        shouldUnlock = stats.accountsChecked >= 50;
-        break;
-      case "hundred_checks":
-        shouldUnlock = stats.accountsChecked >= 100;
+      case "five_checks":
+        shouldUnlock = stats.accountsChecked >= 5;
         break;
       case "high_engagement":
         shouldUnlock = engagementRate !== undefined && engagementRate >= 6;
         break;
-      case "streak_3":
-        shouldUnlock = stats.currentStreak >= 3;
+      case "vs_mode":
+        shouldUnlock = stats.vsModeUsed === true;
         break;
-      case "streak_7":
-        shouldUnlock = stats.currentStreak >= 7;
+      case "level_2":
+        shouldUnlock = stats.level >= 2;
         break;
-      case "streak_30":
-        shouldUnlock = stats.currentStreak >= 30;
+      case "level_3":
+        shouldUnlock = stats.level >= 3;
         break;
-      case "level_5":
-        shouldUnlock = stats.level >= 5;
+      case "daily_challenge":
+        shouldUnlock = checkDailyChallengeComplete(stats);
         break;
-      case "level_10":
-        shouldUnlock = stats.level >= 10;
+      case "top_engagement":
+        // Check if user found an account in top 3 of today's engagement
+        if (engagementRate !== undefined) {
+          const topEngagement = getTopEngagementToday();
+          if (topEngagement.length > 0) {
+            const top3Rates = topEngagement
+              .slice(0, 3)
+              .map((e: EngagementEntry) => e.engagementRate);
+            shouldUnlock = top3Rates.some(
+              (rate: number) => engagementRate >= rate
+            );
+          }
+        }
+        break;
+      case "quick_analyzer":
+        shouldUnlock = (stats.consecutiveChecks || 0) >= 2;
         break;
     }
 
@@ -280,7 +305,11 @@ export function checkAchievements(
   return newlyUnlocked;
 }
 
-export function processEngagementCheck(engagementRate: number): {
+export function processEngagementCheck(
+  engagementRate: number,
+  username?: string,
+  followers?: number
+): {
   pointsEarned: number;
   newStats: UserStats;
   newAchievements: Achievement[];
@@ -292,6 +321,15 @@ export function processEngagementCheck(engagementRate: number): {
   let pointsEarned = awardPointsForCheck(engagementRate);
   stats.totalPoints += pointsEarned;
   stats.accountsChecked += 1;
+
+  // Track quick analyzer (2 checks in a row within 30 seconds)
+  const now = Date.now();
+  if (stats.lastCheckTime && now - stats.lastCheckTime < 30000) {
+    stats.consecutiveChecks = (stats.consecutiveChecks || 0) + 1;
+  } else {
+    stats.consecutiveChecks = 1;
+  }
+  stats.lastCheckTime = now;
 
   // Update streak
   const updatedStats = updateStreak(stats);
@@ -316,6 +354,11 @@ export function processEngagementCheck(engagementRate: number): {
 
   // Check achievements
   const newAchievements = checkAchievements(updatedStats, engagementRate);
+
+  // Save daily engagement data
+  if (username) {
+    saveDailyEngagement(username, engagementRate, followers || 0);
+  }
 
   // Save stats
   saveUserStats(updatedStats);
@@ -369,4 +412,86 @@ export function getLeaderboard(): LeaderboardEntry[] {
   ];
 
   return mockEntries.sort((a, b) => b.points - a.points);
+}
+
+export function saveDailyEngagement(
+  username: string,
+  engagementRate: number,
+  followers: number
+): void {
+  try {
+    const today = new Date().toDateString();
+    const stored = localStorage.getItem(DAILY_ENGAGEMENT_KEY);
+    let dailyData: Record<string, EngagementEntry[]> = {};
+
+    if (stored) {
+      dailyData = JSON.parse(stored);
+    }
+
+    // Reset if it's a new day
+    if (!dailyData[today]) {
+      dailyData = { [today]: [] };
+    }
+
+    // Add new entry
+    const entry: EngagementEntry = {
+      username,
+      engagementRate,
+      followers,
+      checkedAt: new Date().toISOString(),
+    };
+
+    dailyData[today].push(entry);
+
+    // Keep only today's data
+    localStorage.setItem(
+      DAILY_ENGAGEMENT_KEY,
+      JSON.stringify({ [today]: dailyData[today] })
+    );
+  } catch (e) {
+    console.error("Error saving daily engagement:", e);
+  }
+}
+
+export function getTopEngagementToday(): EngagementEntry[] {
+  try {
+    const today = new Date().toDateString();
+    const stored = localStorage.getItem(DAILY_ENGAGEMENT_KEY);
+
+    if (!stored) {
+      return [];
+    }
+
+    const dailyData: Record<string, EngagementEntry[]> = JSON.parse(stored);
+
+    if (!dailyData[today]) {
+      return [];
+    }
+
+    // Sort by engagement rate descending and return top 10
+    return dailyData[today]
+      .sort((a, b) => b.engagementRate - a.engagementRate)
+      .slice(0, 10);
+  } catch (e) {
+    console.error("Error loading daily engagement:", e);
+    return [];
+  }
+}
+
+// Unlock VS mode achievement
+export function unlockVsModeAchievement(): Achievement[] {
+  const stats = loadUserStats();
+  if (stats.vsModeUsed || stats.achievements.includes("vs_mode")) {
+    return [];
+  }
+
+  stats.vsModeUsed = true;
+  const achievement = ACHIEVEMENTS.find((a) => a.id === "vs_mode");
+  if (achievement) {
+    stats.achievements.push("vs_mode");
+    stats.totalPoints += achievement.points;
+    saveUserStats(stats);
+    return [{ ...achievement, unlocked: true }];
+  }
+  return [];
 }
