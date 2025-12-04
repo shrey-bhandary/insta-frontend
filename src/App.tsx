@@ -10,7 +10,6 @@ import {
   ArrowRight,
   Trophy,
   Award,
-  Target,
   BarChart,
 } from "lucide-react";
 import {
@@ -27,6 +26,10 @@ import { Achievements } from "./components/Achievements";
 import { DailyChallenge } from "./components/DailyChallenge";
 import { PointsAnimation } from "./components/PointsAnimation";
 import { AchievementUnlock } from "./components/AchievementUnlock";
+import { QuickDemo } from "./components/QuickDemo";
+import { ExhibitionStats } from "./components/ExhibitionStats";
+import { Confetti } from "./components/Confetti";
+import { FeatureShowcase } from "./components/FeatureShowcase";
 
 interface EngagementData {
   username: string;
@@ -51,6 +54,18 @@ function App() {
   const [pointsEarned, setPointsEarned] = useState<number | null>(null);
   const [unlockedAchievement, setUnlockedAchievement] =
     useState<Achievement | null>(null);
+  const [showConfetti, setShowConfetti] = useState(false);
+
+  const handleQuickDemo = (demoUsername: string) => {
+    setUsername(demoUsername);
+    // Trigger submit after a brief delay for visual feedback
+    setTimeout(() => {
+      const form = document.querySelector("form");
+      if (form) {
+        form.requestSubmit();
+      }
+    }, 100);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -99,7 +114,6 @@ function App() {
           pointsEarned: earned,
           newStats,
           newAchievements,
-          dailyChallengeReward,
         } = processEngagementCheck(engagementRateNum);
 
         setUserStats(newStats);
@@ -109,6 +123,8 @@ function App() {
         // Show first achievement if any unlocked
         if (newAchievements.length > 0) {
           setUnlockedAchievement(newAchievements[0]);
+          setShowConfetti(true);
+          setTimeout(() => setShowConfetti(false), 3000);
         }
       }
     } catch (err: unknown) {
@@ -238,9 +254,27 @@ function App() {
           />
         )}
 
+        {/* Confetti Effect */}
+        <Confetti trigger={showConfetti} />
+
         {/* Analyze Tab */}
         {activeTab === "analyze" && (
           <>
+            {/* Feature Showcase */}
+            <div className="max-w-7xl mx-auto mb-8">
+              <FeatureShowcase />
+            </div>
+
+            {/* Exhibition Stats */}
+            <div className="max-w-7xl mx-auto mb-8">
+              <ExhibitionStats />
+            </div>
+
+            {/* Quick Demo */}
+            <div className="max-w-7xl mx-auto mb-8">
+              <QuickDemo onDemoClick={handleQuickDemo} loading={loading} />
+            </div>
+
             {/* Hero Section */}
             <div className="text-center mb-16">
               <p className="text-yellow-400 font-semibold text-lg mb-4 tracking-wide uppercase">
