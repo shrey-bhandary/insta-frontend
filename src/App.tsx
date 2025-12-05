@@ -562,6 +562,25 @@ function App() {
           </div>
         )}
       </div>
+
+      {/* Footer */}
+      <footer className="relative z-10 mt-12 sm:mt-16 pb-6 sm:pb-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="text-center">
+            <p className="text-blue-200 text-sm sm:text-base">
+              Developed by{" "}
+              <a
+                href="https://github.com/shrey-bhandary"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-yellow-400 hover:text-yellow-300 font-semibold transition-colors underline decoration-yellow-400/50 hover:decoration-yellow-300"
+              >
+                Shreyas Bhandary
+              </a>
+            </p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
